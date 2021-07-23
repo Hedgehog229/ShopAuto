@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
+using Shop.Data.Models;
 
 namespace Shop
 {
@@ -39,7 +40,14 @@ namespace Shop
         {
             services.AddDbContext<AppDBcontent>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
             services.AddRazorPages();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //сервис, позвол€ющий работать с сесси€ми
+            services.AddScoped(sp => ShopCart.GetCart(sp)); //если два пользовател€ зайдут в корзину, то дл€ них выдаетс€ разна€ корзина
+
             services.AddMvc(); //добавление поддержки MVC в проекте
+            services.AddMemoryCache(); // указываем, что используем кеш и сессии
+            services.AddSession(); // и сессии (так же, добавл€ем в Configure()  app.UseSession())
+
             //services.AddTransient<IAllCars, MockCars>(); // дл€ объединени€ интерфейса и класса реализующего интерфейс
             //services.AddTransient<ICarsCategory, MockCategory>();
             services.AddTransient<IAllCars, CarRepository>();
@@ -51,6 +59,8 @@ namespace Shop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession(); //указываем, что используем сессии
+
             /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +89,7 @@ namespace Shop
             app.UseStaticFiles(); //использование статических файлов
             app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
 
+            
             
             using (var scope = app.ApplicationServices.CreateScope())
             {

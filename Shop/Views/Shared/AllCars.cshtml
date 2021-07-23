@@ -1,0 +1,7 @@
+﻿@model Car // доступен для подключения в упрощенном формате как Car (а не как @model Shop.Data.Models.Car), после того, как в _ViewImports.cshtml его подключили @using Shop.Data.Models
+<div class="col-lg-3">
+    <h2>Модель: @Model.Name</h2>
+    <p>Цена: @Model.Price.ToString()$</p>
+    <img class="img-thumbnail" src="@Model.Img" width="600" height="360" alt="@Model.Name" />
+    <p><a class="btn btn-warning" href="#">Подробнее</a></p>
+</div>
