@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Mocks
 {
-    public class MockCars : IAllCars
+    public class CarsRepository : IAllCars
     {
         private readonly ICarsCategory _categoryCars = new MockCategory();
         IEnumerable<Car> IAllCars.Cars { get { return new List<Car> {
@@ -15,11 +15,12 @@ namespace Shop.Data.Mocks
                     Name = "Tesla Model S",
                     ShortDesc = "Быстрый автомобиль",
                     LongDesc = "Красивый, быстрый и очень тихий автомобиль компании Tesla",
-                    Img = "https://www.zr.ru/d/story/6b/804715/1439271976_01_2012_tesla_model_s_fd_1347336745.jpg",
+                    /*Img = "https://www.zr.ru/d/story/6b/804715/1439271976_01_2012_tesla_model_s_fd_1347336745.jpg",*/
+                    Img = "/img/Tesla_M_S.jpg",
                     Price = 45000, 
-                    IsFavorite = true, 
+                    IsFavorite = true,
                     Available = true, 
-                    Category = _categoryCars.AllCategories.First() 
+                    //Category = _categoryCars.AllCategories.First()
                 },
                 new Car{
                     Name = "Ford Fiesta",
@@ -62,7 +63,7 @@ namespace Shop.Data.Mocks
                     Category = _categoryCars.AllCategories.First()
                 }
         }; } }
-        IEnumerable<Car> IAllCars.GetFavCars { get; set; }
+        IEnumerable<Car> IAllCars.GetFavCars { get; }
         Car IAllCars.GetObjectCar(int carId)
         {
             throw new NotImplementedException();
