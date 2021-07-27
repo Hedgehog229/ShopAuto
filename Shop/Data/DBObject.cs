@@ -89,17 +89,18 @@ namespace Shop.Data
         {
             get 
             {
-                if (Categories == null) 
+                if (Category == null)
                 {
-                     var List = new Category[]
-                     {
+                    var List = new Category[]
+                    {
                             new Category { CategoryName = "Электромобили", Desc = "Современный вид транспорта" },
                             new Category{ CategoryName = "Классический автомобиль", Desc = "Машины с ДВС"}
-                     };
+                    };
                     Category = new Dictionary<string, Category>();
                     foreach (Category elemebt in List)
                         Category.Add(elemebt.CategoryName, elemebt);
                 }
+
                 return Category;
             }
         }
