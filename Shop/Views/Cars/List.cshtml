@@ -1,14 +1,10 @@
 ﻿<h1>Все автомобили</h1>
 <h3>@Model.CurrCategory</h3>
-@{ 
-    foreach (var car in Model.AllCars) 
-    {
-        <div>
-            <h2>Модель: @car.Name</h2>
-            <p>Цена: @car.Price.ToString()$</p>
-            <p>
-                <img src=@car.Img width="305" height="180" />
-            </p>
-        </div>
+<div class="row mt-5 mb-2">
+    @{
+        foreach (Car car in Model.AllCars) //для того, чтоб класс Car был виденн отсюда, его необходимо прописать в _ViewImports.cshtml как @using Shop.Data.Models 
+        {
+            @Html.Partial("AllCars", car)
+        }
     }
-}
+</div>
