@@ -89,7 +89,7 @@ namespace Shop.Data
         {
             get 
             {
-                if (Categories == null) 
+                if (Category == null) 
                 {
                      var List = new Category[]
                      {
