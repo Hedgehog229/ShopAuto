@@ -96,7 +96,6 @@ namespace Shop
                 AppDBcontent content = scope.ServiceProvider.GetRequiredService<AppDBcontent>();
                 DBObject.Initial(content); // функция, добавляет в БД объекты, каждый раз при запуске программы
             }
-
             
         }
     }
