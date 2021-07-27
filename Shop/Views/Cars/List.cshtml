@@ -1,8 +1,15 @@
-﻿<h1>Все автомобили</h1>
+﻿<br />
+<br />
+<br />
+<br />
+<b>
+    <font color="LightGray">Age-7 Add</font>
+</b>
+<h1>Все автомобили</h1>
 <h3>@Model.CurrCategory</h3>
 <div class="row mt-5 mb-2">
     @{
-        foreach (Car car in Model.AllCars) //для того, чтоб класс Car был виденн отсюда, его необходимо прописать в _ViewImports.cshtml как @using Shop.Data.Models 
+        foreach (Car car in Model.AllCars) //для того, чтоб класс Car был виденн отсюда, его необходимо прописать в _ViewImports.cshtml как @using Shop.Data.Models
         {
             @Html.Partial("AllCars", car)
         }
