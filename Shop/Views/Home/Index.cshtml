@@ -1,0 +1,24 @@
+﻿@model HomeViewModel
+<br />
+<br />
+<br />
+<br />
+<b>
+    <font color="LightGray">Age-8</font>
+</b>
+<h1>Лучшие автомобили</h1>
+<div class="row mt-5 mb-2" style="background-color:oldlace;">
+    @{
+        ViewData["Title"] = "Favorities";
+
+        foreach (Car car in Model.FavCars)
+        {
+            @Html.Partial("AllCars", car) //AllCars - дключается (встраивается) шаблон из View\Shared\ AllCars.cshtml и передаем в него объект car, который там необходимо отобразить
+        }
+    }
+</div>
+<br />
+<br />
+<b>
+    <font color="LightGray" size="4">(Age-8)</font>
+</b>

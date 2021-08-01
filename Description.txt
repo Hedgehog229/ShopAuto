@@ -82,6 +82,7 @@ JSON (Daniel Crenna)
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.Tools
 Microsoft.EntityFrameworkCore.SqlServer
+
 Создание БД: (20-ая мин. 6 видео)
 Вид -> Другие окна -> Консоль диспетчера пакетов,
 выполнить миграцию в открывшемся снизу окне. Миграция -создает доп. файлы, которые создают таблици и т.п.в БД 
@@ -107,3 +108,43 @@ Microsoft.AspNetCore.Session.Http.Extensions
 При установке плагинов (NuGet) их необходимо подключить в Startup.cs -> ConfigureServices(), перед подключением services.AddMvc()
 кроме AddMemoryCache (его после services.AddMvc()), и, чтобы завершить добавление работы сессий, в Configure() добавляем
 
+8 Age----------------------------------------------------
+
+В проекте создана ветка Bonya-PC_Create_DataBase
+Выполнены команды:
+EntityFrameworkCore\Add-Migration Initial2\
+EntityFrameworkCore\Update-DataBase
+(Создание БД на новой машине)
+
+
+
+   
+   
+   [Route("Home/Index")]
+   public IActionResult MyIndex()
+   {
+      return View("Index");
+   }
+   
+   [Route("Home")]
+   public IActionResult MyAbout()
+   {
+      return View("Index");
+   }
+   
+   [Route("")]
+   public IActionResult MyAbout()
+   {
+      return View("Index");
+   }
+   
+   
+   [Route("")]
+        public IActionResult MyIndex()
+        {
+            return View("Home/Index");
+        }
+
+
+ViewBag.Title = "LessonProject";
+Layout = "~/Views/Home/Index.cshtml";

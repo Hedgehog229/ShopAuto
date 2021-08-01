@@ -1,8 +1,8 @@
 ﻿namespace Shop.Controllers
 {
-    internal class ShopCartViewModel
+    internal class ShowCartViewModel
     {
-        public ShopCartViewModel()
+        public ShowCartViewModel()
         {
         }
     }
