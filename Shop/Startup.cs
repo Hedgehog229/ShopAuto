@@ -21,10 +21,11 @@ namespace Shop
     public class Startup
     {
         private IConfigurationRoot _confString;
+        
 
         public Startup(IHostEnvironment hostEnv) 
         {
-            _confString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("DBsettings.json").Build();
+            _confString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("DBsettings.json").Build();           
         }
         public Startup(IConfiguration configuration)
         {             
@@ -69,33 +70,13 @@ namespace Shop
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-                        
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });*/
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            }*/
+            
             app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseDeveloperExceptionPage(); //подключение отображени€ странички с ошибками
             app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
             app.UseStaticFiles(); //использование статических файлов
-           
-
-            
+                       
             
             using (var scope = app.ApplicationServices.CreateScope())
             {

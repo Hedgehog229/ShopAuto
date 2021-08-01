@@ -26,9 +26,6 @@ namespace Shop.Controllers
                 FavCars = _carRep.GetFavCars
             };
             return View(homeCars);
-        }
-
-       
-
+        }  
     }
 }
