@@ -116,35 +116,10 @@ EntityFrameworkCore\Add-Migration Initial2\
 EntityFrameworkCore\Update-DataBase
 (Создание БД на новой машине)
 
+Если кто-то столкнется, то смотрите файл Shop\Pages\_ViewStart.cshtml, у меня там стояла ссылка на  @{Layout = "_Layout"} (файл "шаблон" _Layout.cshtml), и, как только я поменял на "Index" - заработал default route Home/Index стал подгружаться при старте (https://localhost:44302/) без указания полного адреса/пути (Home/Index). 
+Так же пришлось переименовать текущую страницу по умолчанию \Shop\Pages\Index.cshtml  в Index1.cshtml (иначе почему-то она пытается подтягиваться вместо той, которая для  Home делалась). Надеюсь, не слишком запутанно объяснил.
 
-
-   
-   
-   [Route("Home/Index")]
-   public IActionResult MyIndex()
-   {
-      return View("Index");
-   }
-   
-   [Route("Home")]
-   public IActionResult MyAbout()
-   {
-      return View("Index");
-   }
-   
-   [Route("")]
-   public IActionResult MyAbout()
-   {
-      return View("Index");
-   }
-   
-   
-   [Route("")]
-        public IActionResult MyIndex()
-        {
-            return View("Home/Index");
-        }
-
-
-ViewBag.Title = "LessonProject";
-Layout = "~/Views/Home/Index.cshtml";
+Добавляем контроллер (создаем класс унаследованный от Controller): \Shop\Controllers\
+Добавляем ViewModel: Shop\ViewModels\
+В папке Shop\Views\ создается вложенная папка с названием контроллера (Cars, Home, ShopCart ),
+внутри папки создается файл (представление или вид) *.schtml с названием, аналогичным методу реализованному в контроллере (методу с возвращаемым значением ViewResult)

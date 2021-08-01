@@ -1,5 +1,9 @@
 ﻿@model ShopCartViewModels
-
+<br/>
+<br />
+<br />
+<br />
+<br />
 <div class="container">
     @foreach (var el in Model.shopCart.ListShopItems)
     {
@@ -9,5 +13,5 @@
         </div>
     }
     <hr />
-    <div class="btn btn-danger mt-md-5" asp-controller="Order">Оплатить</div>
+    <div class="btn btn-danger mt-md-5" asp-controller="Order" href="#">Оплатить</div>
 </div>

@@ -20,7 +20,7 @@ namespace Shop.Data.Mocks
                     Price = 45000, 
                     IsFavorite = true,
                     Available = true, 
-                    //Category = _categoryCars.AllCategories.First()
+                    Category = _categoryCars.AllCategories.First()
                 },
                 new Car{
                     Name = "Ford Fiesta",
