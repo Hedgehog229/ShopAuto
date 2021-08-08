@@ -51,8 +51,7 @@ namespace Shop
             //services.AddTransient<ICarsCategory, MockCategory>();
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
-            services.AddMvc(option => option.EnableEndpointRouting = false); //требуется для использования в Configure  app.UseMvcWithDefaultRoute();
-            
+            services.AddMvc(option => option.EnableEndpointRouting = false); //требуется для использования в Configure  app.UseMvcWithDefaultRoute();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +70,14 @@ namespace Shop
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }*/
-            
-            app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
+
+            //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
+            app.UseMvc(routes =>
+            {                                                                               //id? - "?" необязательный параметр
+                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+                                                                                            // category - имя должно точно совпадать с class CarsController, параметром метода public ViewResult List(string category)
+                routes.MapRoute(name: "CategoryFilter", template: "{controller=Cars}/{action}/{category?}"); //, defaults: new { Controller = "Cars", action = "List" }
+            });
             app.UseDeveloperExceptionPage(); //подключение отображения странички с ошибками
             app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
             app.UseStaticFiles(); //использование статических файлов
