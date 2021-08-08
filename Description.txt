@@ -129,7 +129,7 @@ EntityFrameworkCore\Update-DataBase
 
 Изменяем класс CarsController, метод public ViewResult List()
 добавляем входной параметр string category - входная строка с именем категории для выполнения фильтрации коллекции и вывода отфильтрованного (по категории) списка ViewResult List (то, что в конечном виде в браузере передается как /Cars/List/fuel, /Cars/List/electro, и "/" для "Лучшие" (фавориты))
-public ViewResult List(string category)  == Изменение метода см. листинг ветки 
+public ViewResult List(string category)  == Изменение метода см. листинг ветки Age-9
 
 
 
