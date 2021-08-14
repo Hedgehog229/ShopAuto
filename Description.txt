@@ -106,7 +106,7 @@ Microsoft.EntityFrameworkCore.InMemory
 Microsoft.AspNetCore.Session.Http.Extensions
 
 При установке плагинов (NuGet) их необходимо подключить в Startup.cs -> ConfigureServices(), перед подключением services.AddMvc()
-кроме AddMemoryCache (его после services.AddMvc()), и, чтобы завершить добавление работы сессий, в Configure() добавляем
+кроме AddMemoryCache (его после services.AddMvc()), и, чтобы завершить добавление работы сессий, в Configure() добавляем (что? app.UseSession()?)
 
 8 Age----------------------------------------------------
 
