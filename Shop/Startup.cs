@@ -15,8 +15,6 @@ using Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 
 namespace Shop
 {
@@ -59,29 +57,15 @@ namespace Shop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //по адресу на странице браузера /hello выдаст сообщение Hello ASP.NET Core
-            app.Map("/hello", ap => ap.Run(async (context) =>
+            
+            app.UseSession(); //указываем, что используем сессии
+
+            /*if (env.IsDevelopment())
             {
-                await context.Response.WriteAsync($"Hello ASP.NET Core");
-            }));
-
-            app.UseSession(); //указываем, что используем сессии            
-
-            if (env.IsDevelopment()) //если переменная среды ASPNETCORE_ENVIRONMENT имеет значение Development
-            {
-                app.UseDeveloperExceptionPage(); //подключение отображения странички с ошибками
-                //блок кода ниже пытается разделить на 0, тем самым генерируя ошибку и благодаря задействованному методу app.UseDeveloperExceptionPage()
-                //в вывлоде на странице браузера появляется детальная информация по ошибке
-                /*app.Run(async (context) =>
-                {
-                    int x = 0;
-                    int y = 8 / x;
-                    await context.Response.WriteAsync($"Result = {y}");
-                });*/
-
-                //app.UseFileServer(enableDirectoryBrowsing: true); //позволяет просматривать содержимое каталогов на сайте
+                app.UseDeveloperExceptionPage();
+<<<<<<< HEAD
                 //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
-                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views // Требует подключения using Microsoft.Extensions.FileProviders и using System.IO;  
+                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
@@ -90,7 +74,7 @@ namespace Shop
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Controllers")),
-                    RequestPath = new PathString("/Controllers")             
+                    RequestPath = new PathString("/Controllers")
                 });
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
@@ -107,18 +91,15 @@ namespace Shop
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
                     RequestPath = new PathString("/Data")
                 });
+=======
+>>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-            // при вознеикновении ошибки  app.UseExceptionHandler("/Error"); - выдается сообщение "DivideByZeroException occured!"
-            app.Map("/error", ap => ap.Run(async context =>
-            {
-                await context.Response.WriteAsync("DivideByZeroException occured!");
-            }));          
+            }*/
 
             //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseMvc(routes =>
@@ -127,11 +108,8 @@ namespace Shop
                                                                                             // category - имя должно точно совпадать с class CarsController, параметром метода public ViewResult List(string category)
                 routes.MapRoute(name: "CategoryFilter", template: "{controller=Cars}/{action}/{category?}"); //, defaults: new { Controller = "Cars", action = "List" }
             });
-
-            //отображение кодов страниц (404, 500, 200 - успешный запрос)
-            //первым параметром указывается MIME-тип ответа, а второй - то сообщение, которое увидит пользователь.
-            app.UseStatusCodePages("text/plain", "Error. Status code : {0}"); 
-
+            app.UseDeveloperExceptionPage(); //подключение отображения странички с ошибками
+            app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
             app.UseStaticFiles(); //использование статических файлов
                        
             
