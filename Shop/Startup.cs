@@ -22,8 +22,7 @@ namespace Shop
 {
     public class Startup
     {
-        private IConfigurationRoot _confString;
-        
+        private IConfigurationRoot _confString;       
 
         public Startup(IHostEnvironment hostEnv) 
         {
