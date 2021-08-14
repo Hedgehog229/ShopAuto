@@ -15,9 +15,6 @@ using Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using System.IO;
 
 namespace Shop
 {
@@ -61,11 +58,12 @@ namespace Shop
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             
-            app.UseSession(); //указываем, что используем сессии            
+            app.UseSession(); //указываем, что используем сессии
 
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+<<<<<<< HEAD
                 //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
                 //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
@@ -93,13 +91,15 @@ namespace Shop
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
                     RequestPath = new PathString("/Data")
                 });
+=======
+>>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+            }*/
 
             //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseMvc(routes =>
