@@ -59,6 +59,7 @@ namespace Shop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //по адресу на странице браузера /hello выдаст сообщение Hello ASP.NET Core
             app.Map("/hello", ap => ap.Run(async (context) =>
             {
                 await context.Response.WriteAsync($"Hello ASP.NET Core");
