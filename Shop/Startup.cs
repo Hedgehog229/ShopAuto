@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using System.IO;
 
 namespace Shop
@@ -62,21 +63,11 @@ namespace Shop
             
             app.UseSession(); //указываем, что используем сессии            
 
-            if (env.IsDevelopment()) //если переменная среды ASPNETCORE_ENVIRONMENT имеет значение Development
+            if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage(); //подключение отображения странички с ошибками
-                //блок кода ниже пытается разделить на 0, тем самым генерируя ошибку и благодаря задействованному методу app.UseDeveloperExceptionPage()
-                //в вывлоде на странице браузера появляется детальная информация по ошибке
-                /*app.Run(async (context) =>
-                {
-                    int x = 0;
-                    int y = 8 / x;
-                    await context.Response.WriteAsync($"Result = {y}");
-                });*/
-
-                //app.UseFileServer(enableDirectoryBrowsing: true); //позволяет просматривать содержимое каталогов на сайте
+                app.UseDeveloperExceptionPage();
                 //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
-                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views // Требует подключения using Microsoft.Extensions.FileProviders и using System.IO;  
+                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
@@ -85,7 +76,7 @@ namespace Shop
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Controllers")),
-                    RequestPath = new PathString("/Controllers")             
+                    RequestPath = new PathString("/Controllers")
                 });
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
@@ -117,6 +108,7 @@ namespace Shop
                                                                                             // category - имя должно точно совпадать с class CarsController, параметром метода public ViewResult List(string category)
                 routes.MapRoute(name: "CategoryFilter", template: "{controller=Cars}/{action}/{category?}"); //, defaults: new { Controller = "Cars", action = "List" }
             });
+            app.UseDeveloperExceptionPage(); //подключение отображения странички с ошибками
             app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
             app.UseStaticFiles(); //использование статических файлов
                        
