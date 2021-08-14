@@ -15,6 +15,9 @@ using Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace Shop
 {
@@ -58,18 +61,41 @@ namespace Shop
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             
-            app.UseSession(); //указываем, что используем сессии
+            app.UseSession(); //указываем, что используем сессии            
 
-            /*if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
+                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
+                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
+                    RequestPath = new PathString("/Views")
+                });
+                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Controllers")),
+                    RequestPath = new PathString("/Controllers")
+                });
+                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"ViewModels")),
+                    RequestPath = new PathString("/ViewModels")
+                });
+                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Pages")),
+                    RequestPath = new PathString("/Pages")
+                });
+
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }*/
+            }
 
             //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseMvc(routes =>
