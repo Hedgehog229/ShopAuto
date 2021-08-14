@@ -15,11 +15,8 @@ using Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
-<<<<<<< HEAD
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-=======
->>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
 
 namespace Shop
 {
@@ -62,7 +59,6 @@ namespace Shop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-<<<<<<< HEAD
             //по адресу на странице браузера /hello выдаст сообщение Hello ASP.NET Core
             app.Map("/hello", ap => ap.Run(async (context) =>
             {
@@ -111,30 +107,18 @@ namespace Shop
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
                     RequestPath = new PathString("/Data")
                 });
-=======
-            
-            app.UseSession(); //указываем, что используем сессии
-
-            /*if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
->>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-<<<<<<< HEAD
             }
             // при вознеикновении ошибки  app.UseExceptionHandler("/Error"); - выдается сообщение "DivideByZeroException occured!"
             app.Map("/error", ap => ap.Run(async context =>
             {
                 await context.Response.WriteAsync("DivideByZeroException occured!");
             }));          
-=======
-            }*/
->>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
 
             //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseMvc(routes =>
