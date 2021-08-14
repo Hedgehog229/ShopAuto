@@ -59,11 +59,7 @@ namespace Shop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.Map("/hello", ap => ap.Run(async (context) =>
-            {
-                await context.Response.WriteAsync($"Hello ASP.NET Core");
-            }));
-
+            
             app.UseSession(); //указываем, что используем сессии            
 
             if (env.IsDevelopment()) //если переменная среды ASPNETCORE_ENVIRONMENT имеет значение Development
@@ -113,11 +109,6 @@ namespace Shop
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            // при вознеикновении ошибки  app.UseExceptionHandler("/Error"); - выдается сообщение "DivideByZeroException occured!"
-            app.Map("/error", ap => ap.Run(async context =>
-            {
-                await context.Response.WriteAsync("DivideByZeroException occured!");
-            }));          
 
             //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
             app.UseMvc(routes =>
@@ -126,11 +117,7 @@ namespace Shop
                                                                                             // category - имя должно точно совпадать с class CarsController, параметром метода public ViewResult List(string category)
                 routes.MapRoute(name: "CategoryFilter", template: "{controller=Cars}/{action}/{category?}"); //, defaults: new { Controller = "Cars", action = "List" }
             });
-
-            //отображение кодов страниц (404, 500, 200 - успешный запрос)
-            //первым параметром указывается MIME-тип ответа, а второй - то сообщение, которое увидит пользователь.
-            app.UseStatusCodePages("text/plain", "Error. Status code : {0}"); 
-
+            app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
             app.UseStaticFiles(); //использование статических файлов
                        
             
