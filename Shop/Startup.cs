@@ -88,7 +88,11 @@ namespace Shop
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Pages")),
                     RequestPath = new PathString("/Pages")
                 });
-
+                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
+                    RequestPath = new PathString("/Data")
+                });
             }
             else
             {
