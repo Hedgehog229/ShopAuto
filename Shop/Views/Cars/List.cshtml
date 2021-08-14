@@ -12,12 +12,12 @@
         foreach (Car car in Model.AllCars) //для того, чтоб класс Car был виденн отсюда, его необходимо прописать в _ViewImports.cshtml как @using Shop.Data.Models
         {
             //@Html.Partial("AllCars", car) // строка задублирует вывод
-            <div class="col-lg-3">
-                <h2>Модель: @car.Name</h2>
-                <p>Цена: @car.Price.ToString()$</p>
-                <img class="img-thumbnail" src=@car.Img width="600" height="360" />
-                <p><a class="btn btn-warning" href="#">Подробнее</a></p>
-            </div>
+        <div class="col-lg-3">
+            <h2>Модель: @car.Name</h2>
+            <p>Цена: @car.Price.ToString()$</p>
+            <img class="img-thumbnail" src=@car.Img width="600" height="360" />
+            <p><a id="toggleState" class="btn btn-warning" href="#">Подробнее</a></p>
+        </div>
         }
     }
 </div>

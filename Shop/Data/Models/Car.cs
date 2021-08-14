@@ -17,6 +17,8 @@ namespace Shop.Data.Models
         public bool Available { get; set; }
         public int CategoryId { get; set; }
         public string Desc { get; set; }
-        public virtual Category Category { get; set; }
+        
+        //public virtual Category Category { get; set; }
+        public Category Category { get; set; }
     }
 }

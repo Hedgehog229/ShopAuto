@@ -32,7 +32,8 @@ namespace Shop.Data
                      Price = 45000,
                      IsFavorite = true,
                      Available = true,
-                     Category = Categories["Электромобили"]
+                     Category = Categories["Электромобили"],
+                     Id = 1
                 },
                     new Car
                 {
@@ -43,8 +44,9 @@ namespace Shop.Data
                     Price = 11000,
                     IsFavorite = false,
                     Available = false,
-                    Category = Categories["Классический автомобиль"]
-                },
+                    Category = Categories["Классический автомобиль"],
+                    Id = 2
+                    },
                     new Car
                 {
                     Name = "BMW M3",
@@ -54,7 +56,8 @@ namespace Shop.Data
                     Price = 65000,
                     IsFavorite = true,
                     Available = true,
-                    Category = Categories["Классический автомобиль"]
+                    Category = Categories["Классический автомобиль"],
+                    Id = 3
                 },
                     new Car
                 {
@@ -65,8 +68,9 @@ namespace Shop.Data
                     Price = 40000,
                     IsFavorite = true,
                     Available = true,
-                    Category = Categories["Классический автомобиль"]
-                },
+                    Category = Categories["Классический автомобиль"],
+                    Id = 4
+                    },
                     new Car
                 {
                     Name = "Nissan Leaf",
@@ -76,8 +80,9 @@ namespace Shop.Data
                     Price = 14000,
                     IsFavorite = true,
                     Available = true,
-                    Category = Categories["Электромобили"]
-                }
+                    Category = Categories["Электромобили"],
+                    Id = 5
+                    }
                 );
             }
 
