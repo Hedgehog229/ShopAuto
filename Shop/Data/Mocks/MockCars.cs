@@ -9,8 +9,8 @@ namespace Shop.Data.Mocks
 {
     public class CarsRepository : IAllCars
     {
-        //private readonly ICarsCategory _categoryCars = new MockCategory(); //
-        private readonly MockCategory _categoryCars = new MockCategory();
+        private readonly ICarsCategory _categoryCars = new MockCategory(); //если создать MockCategory _categoryCars - объект не будет иметь доступ к _categoryCars.AllCategories, пока не сделать приведение ((ICarsCategory)_categoryCars).AllCategories.First()
+
         IEnumerable<Car> IAllCars.Cars { get { return new List<Car> {
                 new Car {
                     Name = "Tesla Model S",
