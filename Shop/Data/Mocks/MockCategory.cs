@@ -9,9 +9,7 @@ namespace Shop.Data.Mocks
 {
     public class MockCars : ICarsCategory
     {
-
-        //private readonly IAllCars _AllCars = new MockCars();
-        IEnumerable<Category> ICarsCategory.AllCategories
+       IEnumerable<Category> ICarsCategory.AllCategories
         { get 
             { 
                 return new List<Category> { 
