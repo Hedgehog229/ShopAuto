@@ -1,2 +1,4 @@
 ﻿@using Shop.ViewModels
 @using Shop.Data.Models //подключенные здесь классы становятся "видны" в List.cshtml
+ //подключаем все {*,} тэг-хелперы из пространства Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers 

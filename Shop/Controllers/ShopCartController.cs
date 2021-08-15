@@ -13,7 +13,7 @@ namespace Shop.Controllers
     {
         private readonly IAllCars _carRep;
         private readonly ShopCart _shopCart;
-
+        //private Car _car;
         public ShopCartController(IAllCars carRep, ShopCart shopCart ) 
         {
             _carRep = carRep;
@@ -24,9 +24,10 @@ namespace Shop.Controllers
         public ViewResult Index() 
         {
             var Items = _shopCart.GetShopItems();
+            //Items[0].Car = _car;
             _shopCart.ListShopItems = Items;
 
-            var obj = new ShopCartViewModels { shopCart = _shopCart };
+            var obj = new ShopCartViewModels { shopCart = _shopCart};
             return View(obj);
         }
 
@@ -37,6 +38,7 @@ namespace Shop.Controllers
             if (item != null) 
             {
                 _shopCart.AddToCar(item);
+                //_car = (Car)item;
             }
             return RedirectToAction("Index"); //вызов метода public ViewResult Index() 
         }

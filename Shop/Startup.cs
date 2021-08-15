@@ -51,7 +51,9 @@ namespace Shop
             //services.AddTransient<ICarsCategory, MockCategory>();
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
-            services.AddMvc(option => option.EnableEndpointRouting = false); //требуется для использования в Configure  app.UseMvcWithDefaultRoute();            
+            services.AddTransient<IAllOrders, OrdersRepository>();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false); //требуется для использования в Configure  app.UseMvcWithDefaultRoute();           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,50 +61,54 @@ namespace Shop
         {
             
             app.UseSession(); //указываем, что используем сессии
-
-            /*if (env.IsDevelopment())
+            if (env.IsDevelopment()) 
             {
                 app.UseDeveloperExceptionPage();
-<<<<<<< HEAD
-                //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
-                //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
-                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
-                    RequestPath = new PathString("/Views")
-                });
-                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Controllers")),
-                    RequestPath = new PathString("/Controllers")
-                });
-                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"ViewModels")),
-                    RequestPath = new PathString("/ViewModels")
-                });
-                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Pages")),
-                    RequestPath = new PathString("/Pages")
-                });
-                app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
-                    RequestPath = new PathString("/Data")
-                });
-=======
->>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }*/
 
-            //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
-            app.UseMvc(routes =>
+                /*if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+    <<<<<<< HEAD
+                    //app.UseDirectoryBrowser(); //позволяет просматривать содержимое каталогов на сайте
+                    //позволяет просматривать содержимое каталога Views в браузере по ссылке /Views 
+                    app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                    {
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
+                        RequestPath = new PathString("/Views")
+                    });
+                    app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                    {
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Controllers")),
+                        RequestPath = new PathString("/Controllers")
+                    });
+                    app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                    {
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"ViewModels")),
+                        RequestPath = new PathString("/ViewModels")
+                    });
+                    app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                    {
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Pages")),
+                        RequestPath = new PathString("/Pages")
+                    });
+                    app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+                    {
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Data")),
+                        RequestPath = new PathString("/Data")
+                    });
+    =======
+    >>>>>>> parent of 8d6f9c2 (Add UseDirectoryBrowser)
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }*/
+
+                //app.UseMvcWithDefaultRoute(); //url адрес, который вызывает контроллер по умолчанию
+                app.UseMvc(routes =>
             {                                                                               //id? - "?" необязательный параметр
                 routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
                                                                                             // category - имя должно точно совпадать с class CarsController, параметром метода public ViewResult List(string category)

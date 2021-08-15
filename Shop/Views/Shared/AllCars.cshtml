@@ -3,5 +3,8 @@
     <h2>Модель: @Model.Name</h2>
     <p>Цена: @Model.Price.ToString()$</p>
     <img class="img-thumbnail" src="@Model.Img" width="600" height="360" alt="@Model.Name" />
-    <p><a class="btn btn-warning" href="#">Подробнее</a></p>
+    <p class='d-flex justify-content-center'>
+        <a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-Id="@Model.Id"> Добавить в корзину </a>        
+        <a class="btn btn-warning" asp-controller="CarDetails" asp-action="CarDetails"> Подробнее </a>
+    </p>
 </div>

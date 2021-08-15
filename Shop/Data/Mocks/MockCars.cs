@@ -9,14 +9,15 @@ namespace Shop.Data.Mocks
 {
     public class CarsRepository : IAllCars
     {
-        private readonly ICarsCategory _categoryCars = new MockCategory();
+        //private readonly ICarsCategory _categoryCars = new MockCategory(); //
+        private readonly MockCategory _categoryCars = new MockCategory();
         IEnumerable<Car> IAllCars.Cars { get { return new List<Car> {
                 new Car {
                     Name = "Tesla Model S",
                     ShortDesc = "Быстрый автомобиль",
                     LongDesc = "Красивый, быстрый и очень тихий автомобиль компании Tesla",
-                    /*Img = "https://www.zr.ru/d/story/6b/804715/1439271976_01_2012_tesla_model_s_fd_1347336745.jpg",*/
-                    Img = "/img/Tesla_M_S.jpg",
+                    Img = "https://www.zr.ru/d/story/6b/804715/1439271976_01_2012_tesla_model_s_fd_1347336745.jpg",
+                    //Img = "/img/Tesla_M_S.jpg",
                     Price = 45000, 
                     IsFavorite = true,
                     Available = true, 
