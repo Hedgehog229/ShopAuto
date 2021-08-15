@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Mocks
 {
-    public class MockCategory : ICarsCategory
+    public class MockCars : ICarsCategory
     {
+
+        //private readonly IAllCars _AllCars = new MockCars();
         IEnumerable<Category> ICarsCategory.AllCategories
         { get 
             { 
