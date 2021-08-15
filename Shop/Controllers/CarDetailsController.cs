@@ -9,19 +9,30 @@ using System.Threading.Tasks;
 namespace Shop.Controllers
 {
     public class CarDetailsController : Microsoft.AspNetCore.Mvc.Controller
-    {
-        private readonly IAllCarDetails _IAllCarDetails;
+    {        
         private readonly CarDetails _CarDetails;
+        private readonly IAllCars _iallCars;
 
-        public CarDetailsController(IAllCarDetails iAllCarDetails, CarDetails carDetails)
-        {
-            _IAllCarDetails = iAllCarDetails;
+        public CarDetailsController(CarDetails carDetails, IAllCars iAllCars)
+        {            
             _CarDetails = carDetails;
+            _iallCars = iAllCars;
         }
 
-        public ViewResult CarDetails()
-        {            
-            return View();
+        public ViewResult CarDetails(int CarId)
+        {
+            var car = new ViewModels.CarDetailsViewModel();
+
+            foreach (Car c in _iallCars.Cars) 
+            {
+                if (c.Id == CarId) 
+                {
+                    car._carDetails.CurentCar = c;
+                    car._carDetails.Id = CarId;
+                }
+            }           
+            
+            return View(car);
         }
     }
 }

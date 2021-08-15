@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Interfaces
 {
-    public interface IAllCarDetails
+    public interface ICarDetails
     {
-        void CreateCarDetails(CarDetails carDetails);
+        void CreateCarDetails(int Id);
     }
 }

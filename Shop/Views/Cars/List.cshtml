@@ -10,7 +10,7 @@
 <div class="row mt-5 mb-2" style="background-color:oldlace;">
     @{
         foreach (Car car in Model.AllCars) //для того, чтоб класс Car был виденн отсюда, его необходимо прописать в _ViewImports.cshtml как @using Shop.Data.Models
-            @Html.Partial("AllCars", car)
+         @Html.Partial("AllCars", car)
     }
 </div>
 <br />

@@ -13,7 +13,7 @@ namespace Shop.Data.Mocks
         //пока не сделать приведение ((ICarsCategory)_categoryCars).AllCategories.First()
         private readonly ICarsCategory _categoryCars = new MockCategory();   
         
-        IEnumerable<Car> IAllCars.Cars { get { return new List<Car> {
+        public IEnumerable<Car> Cars { get { return new List<Car> {
                 new Car {
                     Name = "Tesla Model S",
                     ShortDesc = "Быстрый автомобиль",
@@ -66,9 +66,15 @@ namespace Shop.Data.Mocks
                     Category = _categoryCars.AllCategories.First()
                 }
         }; } }
-        IEnumerable<Car> IAllCars.GetFavCars { get; }
-        Car IAllCars.GetObjectCar(int carId)
-        {
+        public IEnumerable<Car> GetFavCars { get; }
+        public Car GetObjectCar(int carId)
+        {            
+            List<Car> c = Cars.ToList();
+            foreach (Car i in c) 
+            {
+                if (i.Id == carId)
+                    return i;
+            }
             throw new NotImplementedException();
         }
     }
