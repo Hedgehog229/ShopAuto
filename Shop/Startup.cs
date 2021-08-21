@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
 using Shop.Data.Mocks;
+using Microsoft.Net.Http.Headers;
 
 namespace Shop
 {
@@ -119,7 +120,13 @@ namespace Shop
             });
             app.UseDeveloperExceptionPage(); //подключение отображени€ странички с ошибками
             app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
-            app.UseStaticFiles(); //использование статических файлов
+
+            // настройка дл€ статических файлов, позвол€юща€ кешировать их на период 604800 сек - 7 дней
+            var fileOptions = new StaticFileOptions
+            {
+                OnPrepareResponse = (context) => context.Context.Response.Headers[HeaderNames.CacheControl] = "public, max-age=604800"
+            };
+            app.UseStaticFiles(fileOptions); //использование статических файлов
                        
             
             using (var scope = app.ApplicationServices.CreateScope())
