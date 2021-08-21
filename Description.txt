@@ -125,7 +125,7 @@ EntityFrameworkCore\Update-DataBase
 внутри папки создается файл (представление или вид) *.schtml с названием, аналогичным методу реализованному в контроллере (методу с возвращаемым значением ViewResult)
 
 9 Age-----------------------------------------------------
-Для того, чтобы открывались страницы отдельно "Главная" - лучшие автомобили фавориты), Бензиновые - Классические автомобили и Электро - Электромобилим:
+Для того, чтобы открывались страницы отдельно "Главная" - лучшие автомобили (фавориты), Бензиновые - Классические автомобили и Электро - Электромобилим:
 
 Изменяем класс CarsController, метод public ViewResult List()
 добавляем входной параметр string category - входная строка с именем категории для выполнения фильтрации коллекции и вывода отфильтрованного (по категории) списка ViewResult List (то, что в конечном виде в браузере передается как /Cars/List/fuel, /Cars/List/electro, и "/" для "Лучшие" (фавориты))
@@ -181,7 +181,7 @@ public class Order
 	public List<OrderDetail> orderDetails {get;set;} //поле на основе класса с информацией о заказе - в список помещается описание всех товаров, которые мы приобретаем (добавили в корзину)
 }
 2.
-Data->Medels -> Add new Class OrderDetails
+Data->Models -> Add new Class OrderDetails
 public class OrderDetails
 {
 	public int Id {get;set;} //необходимое для БД
@@ -199,7 +199,7 @@ public DbSet<Order> Order {get;set;}
 public DbSet<OrderDatails> OrderDetails {get;set;}
 
 4. После внесения изменений в БД (шаг 3, добавление таблиц), необходимо выполнить обновление структуры БД
-Другие окна - Консоль диспечтера пакетов:
+Вид - Другие окна - Консоль диспечтера пакетов:
 EntityFrameworkCore\Add-Migration UpdateBD
 EntityFrameworkCore\Update-DataBase 
 
@@ -336,6 +336,98 @@ AllCars.cshtml
 Метод контроллера addToCart(int id) производит вызов функции из модели (класса ShopCart) с добавлением самого товара в корзину
 _shopCart.AddToCar(item);
 
+Чтобы передать int id из метода addToCart в форму AllCars.cshtml, необходимо поменять asp-route-carId на asp-route-Id - по названию параметра в методе - int id (если бы параметр в методе назывался carId, то и в asp-route прописывался бы asp-route-carId):
+<p><a class="btn-warning" asp-controller="ShopCart" asp-action="addToCart" asp-route-carId="@Model.Id">Добавить в корзину</a></p>
+на
+<p><a class="btn-warning" asp-controller="ShopCart" asp-action="addToCart" asp-route-Id="@Model.Id">Добавить в корзину</a></p> 
 
+Валидация данных формы для ввода
+[37:00] изменение модели Order для реализации проверки вводимых значений в форме Checkout.cshtml (Покупка)
+(новые добавленные поля - с комментариями)
+подключяем в классе библиотеку: Microsoft.AspNetCore.Mvcю.ModelBinding
+using System.ComponentModel.DataAnnotations; //[Display(Name = "Введите имя")], [StringLength(2)]
+using Microsoft.AspNetCore.Mvc.ModelBinding; //[Required(ErrorMessage = "Длина имени не менее 2 символов")], [BindNever]
 
+public class Order
+    {
+		[BindNever]// аттрибут указывает, что данное поле никогда не будет отображаться на странице (дословно "никогда не привязывать")
+        public int Id { get; set; }
+		
+		[Display(name = "Введите имя")] 
+		[StringLength(2)] //Проверка, что вводимое значение не должно быть меньше 2 символов
+		[Reqiured(ErrorMessage="Длина имени не менее 2 символов")] // если меньше 2 символов - выдается сообщение
+        public string Name { get; set; }
+		
+		[Display(name = "Фамилия")] 
+		[StringLength(2)] //Проверка, что вводимое значение не должно быть меньше 2 символов (фамилия Ли)
+		[Reqiured(ErrorMessage="Длина фамилии не менее 2 символов")] // если меньше 2 символов - выдается сообщение
+        public string SurName { get; set; }
+		
+		[Display(name = "Адрес")] 
+		[StringLength(15)] //Проверка, что вводимое значение не должно быть меньше 15 символов
+		[Reqiured(ErrorMessage="Длина адреса не менее 15 символов")] // если меньше 15 символов - выдается сообщение
+        public string Address { get; set; }
+		
+		[Display(name = "Телефон")] 
+		[DataType(DataType.PhoneNumber)]
+		[StringLength(11)] //Проверка, что вводимое значение не должно быть меньше 11 символов
+		[Reqiured(ErrorMessage="Длина номера телефона не менее 11 символов")] // если меньше 11 символов - выдается сообщение
+        public string Phone { get; set; }
+		
+		[Display(name = "EMail")] 
+		[DataType(DataType.EmailAddress)]
+		[StringLength(5)] //Проверка, что вводимое значение не должно быть меньше 5символов
+		[Reqiured(ErrorMessage="Длина электронного адреса не менее 5 символов")] // если меньше  5 символов - выдается сообщение
+        public string EMail { get; set; }
+		
+		
+		[BindNever]
+		[ScaffoldColumn(false)] //для того, чтобы не просто скрыть данное поле, но чтобы оно не было отображено в исходном коде (чтобы это ни значило)
+        public DateTime OrderTime { get; set; }
 
+        public List<OrderDetails> OrderDetails { get; set; }
+
+    }
+
+[~41:10] Изменение функции контроллера OrderController, public IActionResult Checkout()
+
+public IActionResult Checkout() //данная функция будет вызвана, когда мы перейдем на страничку заказа, но при этом мы еще не отправляли данные
+{
+	return View();
+}
+
+[HttpPost] //функция, которая срабатывает только при HttpPost - т.е., когда мы заполнили поля формы и нажали подтвердить заказ, 
+		   //значеие полей формы передаются в программу (asp-actions="Checkout" method="post" )
+public IActionResult Checkout(Order order) //данная функция будет вызвана, когда мы перейдем на страничку заказа, но при этом мы еще не отправляли данные
+{
+	shopCart.ListShopItems = shopCart.getShopItems();
+	if(_ShopCart.ListShopItems.Count == 0) // если товаров в корзине нет еще
+	{
+		ModelState.AddModelError("", "У вас дожны быть товары!"); // ключ и значение (в нашем случае ключ пустой)
+	}
+	Else
+	{
+[45:31] if(ModelState.IsValid) //вернет true только в том случае, если все поля формы, заполненные пользователем прошли проверку
+		{
+			allOrders.createOrder(order);
+			return RedirectToAction("Complete") //если все в порядке, то возвращаем нужную страницу редиректом (перенаправляем на нужную страницу)
+		}
+	}
+	return View();
+}
+
+[47:10] Создаем функцию Complete в контроллере OrderController 
+
+public IActionResult Complete() 
+{
+	ViewBag.Message = "Заказ успешно обработан!";
+    return View();
+}
+[47:50]	Views -> Order	-> Add new View Complete.cshtml
+
+[49:00]Ошибка=========================
+Microsoft.EntityFrameworkCore.DbUpdateException: "An error occurred while updating the entries. See the inner exception for details."
+
+SqlException: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_OrderDetails_Car_CarId". The conflict occurred in database "Shop", table "dbo.Car", column 'Id'.
+The statement has been terminated.
+===============================

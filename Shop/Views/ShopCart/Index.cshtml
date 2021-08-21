@@ -8,10 +8,10 @@
     @foreach (var el in Model.shopCart.ListShopItems)
     {
         <div class=" alert alert-warning mt-md-5">
-            <b>Автомобиль:</b>@el.Id<br/>
+            <b>Автомобиль:</b>@el.Car.Name<br/>
             <b>Цена:</b>@el.Price.ToString()$
         </div>
     }
     <hr />
-    <a class="btn btn-danger mt-md-5" asp-controller="Order" asp-action="Checkout">Оплатить</a>
+    <a class="btn btn-danger mb-5" asp-controller="Order" asp-action="Checkout">Оплатить</a>
 </div>

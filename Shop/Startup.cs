@@ -15,6 +15,7 @@ using Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repository;
 using Shop.Data.Models;
+using Shop.Data.Mocks;
 
 namespace Shop
 {
@@ -47,8 +48,8 @@ namespace Shop
             services.AddMemoryCache(); // указываем, что используем кеш и сессии
             services.AddSession(); // и сессии (так же, добавляем в Configure()  app.UseSession())
 
-            //services.AddTransient<IAllCars, MockCars>(); // для объединения интерфейса и класса реализующего интерфейс
-            //services.AddTransient<ICarsCategory, MockCategory>();
+            services.AddTransient<IAllCars, MockCars>(); // для объединения интерфейса и класса реализующего интерфейс
+            services.AddTransient<ICarsCategory, MockCategory>();
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
             services.AddTransient<IAllOrders, OrdersRepository>();

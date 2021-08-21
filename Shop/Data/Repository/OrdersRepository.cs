@@ -21,20 +21,18 @@ namespace Shop.Data.Repository
         {
             order.OrderTime = DateTime.Now;
             _AppDBcontent.Order.Add(order);
+            _AppDBcontent.SaveChanges();
 
             var items = _ShopCart.ListShopItems;
 
-            foreach (var i in items) 
+            foreach (var el in items) 
             {
-                var orderDetails = new OrderDetails()
-                {
-                    _Car = i.Car,
-                    CarId = i.Car.Id,
-                    OrderId = order.Id,
-                    Price = i.Car.Price,
+                var orderDetails = new OrderDetails() { 
+                    CarId = el.Car.Id, 
+                    OrderId = order.Id, 
+                    Price = el.Car.Price
                 };
-
-                _AppDBcontent.OrderDetails.Add(orderDetails);
+                _AppDBcontent.OrderDetails.Add(orderDetails); // Добавляем в БД [16:46]
             }
             _AppDBcontent.SaveChanges();
         }

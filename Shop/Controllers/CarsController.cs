@@ -16,6 +16,7 @@ namespace Shop.Controllers
 
         public CarsController (IAllCars iAllCars, ICarsCategory iCateg) 
         {
+            //так как мы связали интерфейсы с классами (Startup, services.AddTransient<>()), то передаваться по интерфейсу будет класс, его реализующий
             _allCars = iAllCars;
             _allCategory = iCateg;
         }
