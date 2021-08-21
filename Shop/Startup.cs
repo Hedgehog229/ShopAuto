@@ -121,7 +121,8 @@ namespace Shop
             app.UseDeveloperExceptionPage(); //подключение отображени€ странички с ошибками
             app.UseStatusCodePages(); //отображение кодов страниц (404, 500, 200 - успешный запрос)
 
-            // настройка дл€ статических файлов, позвол€юща€ кешировать их на период 604800 сек - 7 дней
+            // настройка дл€ статических файлов, позвол€юща€ кешировать их на период 604800 сек - 7 дней (файл считаетс€ актуальным в течение 7 дней (не надо скачивать повторно с сервера))
+            // через опции добавили в ответ сервера заголовок CacheControl
             var fileOptions = new StaticFileOptions
             {
                 OnPrepareResponse = (context) => context.Context.Response.Headers[HeaderNames.CacheControl] = "public, max-age=604800"
