@@ -52,7 +52,7 @@ namespace Shop
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
             services.AddTransient<IAllOrders, OrdersRepository>();
-            //services.AddTransient<ICarDetails, CarDetailsRepository>();
+            services.AddTransient<CarDetails>();
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false); //требуется для использования в Configure  app.UseMvcWithDefaultRoute();           

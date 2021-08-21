@@ -1,8 +1,14 @@
-﻿@model Car // доступен для подключения в упрощенном формате как Car (а не как @model Shop.Data.Models.Car), после того, как в _ViewImports.cshtml его подключили @using Shop.Data.Models
+﻿@model Shop.Data.Models.CarDetails // доступен для подключения в упрощенном формате как Car (а не как @model Shop.Data.Models.Car), после того, как в _ViewImports.cshtml его подключили @using Shop.Data.Models
 <div class="col-lg-3">
-    <h2>Модель: @Model.Name</h2>
-    <p>Цена: @Model.Price.ToString()$</p>
-    <img class="img-thumbnail" src="@Model.Img" width="600" height="360" alt="@Model.Name" />
-    <p class='d-flex justify-content-center'>       
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2>Модель: @Model.CurentCar.Name</h2>
+    <p>Цена: @Model.CurentCar.Price.ToString()$</p>
+    <p>@Model.CurentCar.ShortDesc</p>
+    <p>@Model.CurentCar.LongDesc</p>
+    <img class="img-thumbnail" src="@Model.CurentCar.Img" alt="@Model.CurentCar.Name" />
+    <p class='d-flex justify-content-center'>
     </p>
 </div>

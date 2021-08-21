@@ -21,14 +21,14 @@ namespace Shop.Controllers
 
         public ViewResult CarDetails(int CarId)
         {
-            var car = new ViewModels.CarDetailsViewModel();
+            var car = new CarDetails();
 
             foreach (Car c in _iallCars.Cars) 
             {
                 if (c.Id == CarId) 
                 {
-                    car._carDetails.CurentCar = c;
-                    car._carDetails.Id = CarId;
+                    car.CurentCar = c;                   
+                    car.Id = CarId;
                 }
             }           
             
