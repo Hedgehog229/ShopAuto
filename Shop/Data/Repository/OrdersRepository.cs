@@ -21,7 +21,7 @@ namespace Shop.Data.Repository
         {
             order.OrderTime = DateTime.Now;
             _AppDBcontent.Order.Add(order);
-            _AppDBcontent.SaveChanges();
+            _AppDBcontent.SaveChanges(); // сохраняем внесенные изменения, 
 
             var items = _ShopCart.ListShopItems;
 
