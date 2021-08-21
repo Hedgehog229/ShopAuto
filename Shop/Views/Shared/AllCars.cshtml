@@ -5,6 +5,6 @@
     <img class="img-thumbnail" src="@Model.Img" width="600" height="360" alt="@Model.Name" />
     <p class='d-flex justify-content-center'>
         <a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-Id="@Model.Id"> Добавить в корзину </a>        
-        <a class="btn btn-warning" asp-controller="CarDetails" asp-action="CarDetails" asp-route-carId="@Model.Id"> Подробнее </a>
+        <a class="btn btn-warning" asp-controller="CarDetails" asp-action="CarDetails" asp-route-CarId="@Model.Id"> Подробнее </a>
     </p>
 </div>

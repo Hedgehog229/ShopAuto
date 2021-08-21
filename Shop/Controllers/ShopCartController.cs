@@ -37,7 +37,7 @@ namespace Shop.Controllers
             var item = _carRep.Cars.FirstOrDefault(i => i.Id == id);
             if (item != null) 
             {
-                _shopCart.AddToCar(item);
+                _shopCart.AddToCar(item); // вызов функции из модели
                 //_car = (Car)item;
             }
             return RedirectToAction("Index"); //вызов метода public ViewResult Index() 

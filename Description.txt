@@ -314,4 +314,28 @@ View - Add folder Order (так как наш контроллер называ�
 		<input class="btn btn-success" type="submit" value="Завершить заказ"/>
 	</form>
 
+начиная после 30 минуты
+
+[~32:15]<a></a> -- ссылка (кнопка class="btn btn-success" работает только с ссылкой или с input, но не div (синтаксис хелперов работает в ссылках и в инпутах, но не в div))
+[32:45] InvalidOperationException: Unable to resolve service for type 'Shop.Data.Interfaces.IAllOrders' while attempting to active Shop.Controllers.OrderController == необходимо зарегистрировать и нтерфейс IAllOrders в сервисах/зависимостях
+в классе Startup, методе ConfigureServices
+services.AddTransient<IAllOrders, OrdersRepository>();
+
+[33:50] проблема с добавлением товаров в корзину
+AllCars.cshtml
+меняем
+@model Car
+...
+...
+...
+<p><a class="btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-carId="@Model.Id">Добавить в корзину</a></p>
+на
+<p><a class="btn-warning" asp-controller="ShopCart" asp-action="addToCart" asp-route-carId="@Model.Id">Добавить в корзину</a></p>
+иммя функции было указано не верно (с большой буквы)
+
+Метод контроллера addToCart(int id) производит вызов функции из модели (класса ShopCart) с добавлением самого товара в корзину
+_shopCart.AddToCar(item);
+
+
+
 
