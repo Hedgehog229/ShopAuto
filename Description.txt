@@ -161,48 +161,157 @@ public ViewResult List(string category)  == Изменение метода см
 Тэг <span asp-validation-for="Name" class="text-danger"/> - выводится, если пользователь не вводит в (форму) поле Name данные (ОШИБКА)
 
 
-col-sm-12
-col-lg-3
+CarsRepository_categoryCars.AllCategories.First()
 
-col-lg-3
+========================================================================================================
+Видео 10
+1.
+Для странички нужно создать новую модель. В модели реализуются все необходимые поля, которые потом отображаются в новой форме (html-странице)
+Data->Medels -> Add new Class Order (заказ)
 
-class='d-flex justify-content-end'
+public class Order
+{
+	public int Id {get;set;} //Id заказа, необходимое для БД
+	public string Name {get;set;}
+	public string SurName {get;set;}
+	public string Address {get;set;}
+	public string Phone {get;set;}
+	public string EMail {get;set;}
+	...
+	public List<OrderDetail> orderDetails {get;set;} //поле на основе класса с информацией о заказе - в список помещается описание всех товаров, которые мы приобретаем (добавили в корзину)
+}
+2.
+Data->Medels -> Add new Class OrderDetails
+public class OrderDetails
+{
+	public int Id {get;set;} //необходимое для БД
+	public int OrderId {get;set;} //
+	public int CarId {get;set;} //идентификатор конкретного товара
+	public uint Price {get;set;}
+	public virtual Car car {get;set;} //связывает список заказа (OrderDetails) с объектом товара (нужны для БД)      //помещается объект товар
+	public virtual Order order {get;set;} //связывает список заказа (OrderDetails) с объектом заказа (нужны для БД)  //помещается объект заказ
+	
+	public List<OrderDetail> orderDetails {get;set;} //поле на основе класса с информацией о заказе - в список помещается описание всех товаров, которые мы приобретаем (добавили в корзину)
+}
 
-{property}{sides}-{breakpoint}-{size} для sm, md, lg, и xl.
-Вместо {property} необходимо указать первую букву названия отступа, т.е. m или p (m – для margin, p – для padding).
+3. Зайти в AppDbConfig.sc и зарегистрировать две таблицы:
+public DbSet<Order> Order {get;set;}
+public DbSet<OrderDatails> OrderDetails {get;set;}
 
-Вместо {sides} необходимо указать сторону (t - для задания отступа только сверху, b – снизу, l – слева, r – справа) или несколько сторон (x – слева и справа, y – сверху и снизу). Если {sides} не указать, то тогда
+4. После внесения изменений в БД (шаг 3, добавление таблиц), необходимо выполнить обновление структуры БД
+Другие окна - Консоль диспечтера пакетов:
+EntityFrameworkCore\Add-Migration UpdateBD
+EntityFrameworkCore\Update-DataBase 
 
-pr-2
-pl-2
+Перед созданием контроллера и ШТМЛ-шаблона необходимо создать интерфейс и класс его реализующий (длянахуя??? -по воле небес???)
 
+5. Создаем интерфейс и класс его реализующий (для чего? - да хз, так задумано всевышним...)
+5.1 Date -> Interface -> Add Class -> Interface -> IAllOrders.sc ([19:12] - модификатор доступа public)
+В интерфейсе всего одна функция, которая будет создавать заказ (void createOrders(Order order))
+и 2 перременные: ссылка на AppDbContent и 
+privete readonly AppDbContent appDbContent {get;set;};
+privete readonly ShopCart shopCart {get;set;};
+5.2 Создаем класс реализующий интерфейс 
+Date -> Repository -> Add new Class OrdersRepository.sc (класс необходимый для БД?)
+[11:02]
 
-List.cshtml
- //@Html.Partial("AllCars", car) // строка задублирует вывод
-            <div class='col-lg-3'>
-                <h2>Модель: @car.Name</h2>
-                <p>Цена: @car.Price.ToString()$</p>
-                <img class="img-thumbnail" src=@car.Img width="600" height="360" />
-                <p class='d-flex justify-content-center'>
-                    <a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-Id="@car.Id"> Добавить в корзину </a>
-                    <a class="btn btn-warning" asp-controller="CarDetails" asp-action="CarDetails"> Подробнее </a>
-                </p>
-            </div>
+Далее создаем конструктор, в котором будут устанавливаться значения для наших полей (shopCart, appDbContent)
+Далее реализуем метод public void createOrders(Order order): у входящего параметра Order order устанавливаем текущее время (время заказа)
+Далее добавляем заказ в таблицу БД Order через ссылку appDbContent
+и создаем переменную. которая будет хранить все товары, которые заказывает пользователь.
+Далее создаем цикл для заполнения полей OrderDetails и добавляем объект, созданный в итерауии цикла в БД.
+В звыершении метода сохраняем все настройки в БД [16:50]
 
+public class OrderRepository : IAllOrders
+{
+	privete readonly AppDbContent appDbContent; //для возможности добавления в таблицы БД
+	privete readonly ShopCart shopCart;         //корзина с товарами для покупки (ссылка на класс)
+	
+	public OrderRepository (ShopCart shopCart, AppDbContent appDbContent)
+	{
+		this.shopCart = shopCart;
+		this.appDbContent = appDbContent;
+	}
+	
+	public void createOrders(Order order) //реализация интерфейсв IAllOrders
+	{
+		order.orderTime = DateTime.Now;
+		appDbContent.Order.Add(order);
+		
+		var items = shopCar.ListShopItems; //переменная, которая хранит все товары, которые заказывает пользователь
+		
+		foreach(var el in items)
+		{
+			var orderDetails = new OrderDetaols(){ carId = el.Car.Id, orderId = order.Id, Price = el.Car.Price};
+			appDbContent.OrderDetails.Add(orderDetails) // Добавляем в БД [16:46]			
+		}
+		appDbContent.SaveChanges(); // сохраняем изменения внесенные в БД.
+	}
+}
 
+Создание контроллера [17:15]
+Controllers -> Add class -> OrderController.cs
+[17:45] создаем 2 переменные, которые будут обращаться: первая к интерфейсу IAllOrders (через неё обращаемся к функции создания заказа),
+вторая переменная обращается к ShopCart.
+[19:20] Создаем еще один метод CheckOut с возвращаемым объектом IActionResult  (возвращает некий View),
+возвращает html-шаблон, над которым происходят какие-то действия - в нашем случае, возвращается форма, в которую пользователь может вводить данные [~20:05] и данные, введенные пользователем,
+будут приниматься из формы блягодаря IActionResult
 
+public class OrderController : Microsoft.AspNetCore.MVC.Controller
+{
+	privete readonly IAllOrders allorders; //для возможности добавления в таблицы БД
+	privete readonly ShopCart shopCart;         //корзина с товарами для покупки (ссылка на класс)
+	
+	public OrderController (ShopCart shopCart, IAllOrders allorders)
+	{
+		this.shopCart = shopCart;
+		this.allorders = allorders;
+	}
+	
+	public IActionResult CheckOut() //  
+	{
+		retturn View();	 //возвращает html-шаблон, над которым происходят какие-то действия (IActionResult)
+	}
+}
 
+[20:35] Создаем новую форму под новый контроллер
+View - Add folder Order (так как наш контроллер называется OrderController) -> Add new class View CheckOut (имя CheckOut должно совпадать с названием метода из контроллера - т.е. названием метода и html-шаблон, который он вызывает/возвращает должны совпадать)
+[21:12] Создание формы html-шаблона
+Подключаем в шаблоне модель 
+@model Order
+Далее прописываем html
 
+[22:30] Подключение TagHelpers
+Нужные тэг-хелперы подключаются в файле _ViewImport.cshtml седующими командами:
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers //подключаем все тэг-хелперы из Microsoft.AspNetCore.Mvc.TagHelpers
+Одна из функций тэг-хелперов в html-коде ссылки прописываются в виде href="[путь ссылки]", с использованием тэг-хелперов мы можем задавать в структуре html-кода конкретные контроллер м метод (которые указывает на необходимую форму):
+<a class="nav-link" href="/">Главная</a> //без тэг-хелперов
+<a class="nav-link" asp-controller="Home" asp-action="Index">Главная</a> //с тэг-хелпером --при нажатии на ссылку вызывается конроллер HomeController и метод контроллера Index (вызывающий html-шаблон Index.cshtml)
+[~26:00] Описание связи полей формы с полями класса Order, который мы подключили в качестве модели в шаблон: имена формы должны полностью совпадать с именами класса
+Поля Input html-шаблона автоматически подстраиваются к типу данных полей класса модели, который мы указываем (@model Order)
 
+<input asp-form="name" class="form-control"/> -- связывается поле public string name класса Order с типом string (если бы в Order поле name было типа int - input ограничивал бы на форме поле вводом только цифрами)
+<span asp-validation-for="name" class="text-danger"></span> //проверка данных вводимых в поле с именем name html формы.
 
-
-
-
-
-
-
-
-
-
+Часть кода формы Checkout.cshtml
+@model Order
+<div class="row">
+	<h3>Оформление заказа</h3>
+	<form asp-action="Checkout" method="post" class="form-horizontal">
+		<div class="form-group">
+			<label asp-for="name"></label>
+			<div class="col-md-5">
+				<input asp-for="name" class="from-control"/>
+				<span asp-validation-for="name" class="text-danger"></span>
+			</div>
+		</div>
+		//остальные поля модели (класса) Order (surname, address, phone, email), реализуются тким же образом (Ctrl+C, Ctrl+V, rename)
+		...
+		...
+		...
+		//кнопка с типом submit, которая вызовет asp-action="Checkout" (именно при нажатии на кнопку с типом данных submit у нас будет срабатывать экшин asp-action="Checkout" которая будет вызывать 
+		//функцию  Checkout)
+		<input class="btn btn-success" type="submit" value="Завершить заказ"/>
+	</form>
 
 
